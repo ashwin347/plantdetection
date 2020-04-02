@@ -48,11 +48,10 @@
         if (this.readyState == 4 && this.status == 200) 
         { 
           recents=this.responseText.split('^');
-          for(var i=0;i<recents.length;i++)
+          for(var i=1;i<recents.length;i++)
           {
             recent=recents[i].split('|');
             flower=recent[0];
-            console.log(recent);console.log(recent);
             try{
 
               var baseString = recent[4].trim();

@@ -322,45 +322,45 @@ footer p {
         height: auto;
         width: auto;
     }
-button {
-        left: 1029%;
-    width: 160%;
-}
-.header-search-box {
-        left: 14%;
-    top: 53%;
-    width: 68%;
-    height: 9%;
-
-}
-.search-input{
-        height: 0%;
-    width: 65%;
-    left: 2%;
-    font-size: 145%;
-
-}
-
-.immg {
-         width: 37%;
-    left: 31%;
-    height: 29%;
-    bottom: 40%;
-    object-fit: contain;
-    object-position: center;
-}
-   #canvas
-{   
-          left: 55%;
-    top: 0%;
-} 
-.now
-{
-        width: 307%;
-    height: 2233px;
-}
-.center-line {
-        top: 6%;
-    height: 80%;
+    button {
+            left: 1029%;
+        width: 160%;
     }
+    .header-search-box {
+            left: 14%;
+        top: 53%;
+        width: 68%;
+        height: 9%;
+
+    }
+    .search-input{
+            height: 0%;
+        width: 65%;
+        left: 2%;
+        font-size: 145%;
+
+    }
+
+    .immg {
+             width: 37%;
+        left: 31%;
+        height: 29%;
+        bottom: 40%;
+        object-fit: contain;
+        object-position: center;
+    }
+       #canvas
+    {   
+              left: 55%;
+        top: 0%;
+    } 
+    .now
+    {
+            width: 307%;
+        height: 2233px;
+    }
+    .center-line {
+            top: 6%;
+        height: 80%;
+        }
 }

@@ -17,6 +17,7 @@
             <span></span>
         </div>
         <ul>
+            <li onclick="window.location.href='explore.html'">Explore</li>
             <li>Contact</li>
             <li>About</li>
             <li id="recent" onclick="window.location.href='recent.html'">Recent</li>
@@ -28,9 +29,9 @@
         </div>
     </div>
 
-    <div class="header-search-box">
+    <div class="header-search-box" >
         <form id="upload-file" action="/web/item/upload_flower_to_save" method="post" enctype="multipart/form-data">
-            <input id='search' class="search-input" autocomplete="off" type="text" name="word" placeholder="Upload picture or search by the name">
+            <input id='search' onchange="suggest()" class="search-input" autocomplete="off" type="text" name="word" placeholder="Upload picture or search by the name">
             <span class="center-line"></span>
             <div class="search-icon">
                 <input id="header-page" style="display: none" name="page">
@@ -47,8 +48,7 @@
             </label>
         </div>
     </form>
-</div>
-<div class="now">
+<div class="now" style="display: none">
  <div id="canvas">
   <img id="pic" >
   <button onclick="$('#canvas').hide();">Try Another!</button>
@@ -61,6 +61,14 @@
     </p>
 </footer>
 
+    <div id="modelbox" style="background-color: grey;position: fixed;top:0px;left:0px;height: 100%;width: 100%;display: none" onclick="document.getElementById('modelbox').style.display='none'">
+        <div id="box" onclick="none" style="background-color: white;position: fixed;top:0px;left:0px;height: 50%;width: 50%;display: inherit;">
+            oops! search not found. did you mean?
+            <div id="suggestions">
+
+        </div>
+    </div>
+</div>
 <script src='../static/jquery.js'></script>
 <script type="text/javascript">
     
@@ -85,6 +93,28 @@
         }
     }
     
+    function suggest(keyword)
+    {
+        var xhttp = new XMLHttpRequest();
+        xhttp.onreadystatechange = function() 
+        {
+          if (this.readyState == 4 && this.status == 200) 
+          {
+            suggestbox=document.getElementById('box');
+            suggestbox.innerHTML = 'oops. search not found';
+            if(this.responseText!="none")
+            {
+                
+            }
+        }
+        else if(this.readyState==4 && this.status==0)
+        {
+            alert("connection error!");
+        }
+    }
+    xhttp.open("GET", ip+'/suggest?query='+keyword, true);
+    xhttp.send();
+}
     function togglepanel() {
         document.getElementById("panel").classList.toggle('active');
     } 
@@ -97,13 +127,31 @@
         var xhttp = new XMLHttpRequest();
         xhttp.onreadystatechange = function() {
           if (this.readyState == 4 && this.status == 200) {
+            if(this.responseText.slice(0,4)=="none"){
+                console.log(this.responseText);
+                string=this.responseText.slice(4,this.responseText.length);
+                suggestions=string.split(',');
+                for(i=0;i<suggestions.length;i++)
+                {
+                    document.getElementById('modelbox').style.display="block";
+                    label=document.createElement('label');
+                    label.innerHTML=suggestions[i];
+                    label.onclick=function()
+                    {
+                        document.getElementById('search').value=label.innerHTML;
+                    searchstring();
+                    }
+                    suggestbox.appendChild(label);
+                }
+            }
+            else if(this.responseText.slice(0,3)!="nil"){
               localStorage.setItem('data',this.responseText);
               window.location.href="rosenew.html";
+              }
           }
           else if(this.readyState==4 && this.status==0){
             alert("connection error!");
         }
-        
     }
     xhttp.open("GET", ip+'/classify?flowername='+search, true);
     xhttp.send();
