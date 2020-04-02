@@ -31,7 +31,7 @@
 
     <div class="header-search-box" >
         <form id="upload-file" action="/web/item/upload_flower_to_save" method="post" enctype="multipart/form-data">
-            <input id='search' onchange="suggest()" class="search-input" autocomplete="off" type="text" name="word" placeholder="Upload picture or search by the name">
+            <input id='search' class="search-input" autocomplete="off" type="text" name="word" placeholder="Upload picture or search by the name">
             <span class="center-line"></span>
             <div class="search-icon">
                 <input id="header-page" style="display: none" name="page">
@@ -60,15 +60,84 @@
         Created by rimold,sarath,alphonsa,ashwin
     </p>
 </footer>
+    <div id="modelbox" style="background-color: #5f5e5e87;position: fixed;top:0px;left:0px;height: 100%;width: 100%;display: block" onclick="document.getElementById('modelbox').style.display='none'">
+        <div id="box" onclick="none" >
 
-    <div id="modelbox" style="background-color: grey;position: fixed;top:0px;left:0px;height: 100%;width: 100%;display: none" onclick="document.getElementById('modelbox').style.display='none'">
-        <div id="box" onclick="none" style="background-color: white;position: fixed;top:0px;left:0px;height: 50%;width: 50%;display: inherit;">
-            oops! search not found. did you mean?
+            <img id="error" src="../static/error.png">
+            <label id="msg">oops! search not found!
+            </label>
             <div id="suggestions">
 
         </div>
+
+    <button id='tryagain' onclick="document.getElementById('modelbox').style.display='none'">Try another</button>
     </div>
 </div>
+<style type="text/css">
+    #box{
+        background-color: white;position: fixed;top:10%;left:10%;height: 80%;width: 80%;display: inherit;
+        text-align: center;
+    }
+    @media (min-width: 1000px) {
+       #error{
+        height: 150px;
+        width: 150px;
+        margin-left: 15%;
+        margin-top: 5%; 
+       }
+   }
+   @media (max-width: 1000px) {
+       #error{
+        margin-top: 5%; 
+
+        height: 500px;
+        width: 500px;
+        top: 10%;
+       }
+
+       #msg{
+        position: absolute;
+        top: 46%;
+        left: 20%;
+        color: red;
+        font-size: 40px;
+       }
+       #tryagain{
+    position: relative;
+    z-index: 2;
+    height: 103px;
+    top: 40%;
+    left: 24%;
+    width: 50%;
+    background-color: red;
+    border: none;
+    font-size: 48px;
+    font-weight: 00;
+       }
+       .member{
+               background-color: #ddfffd;
+    /* position: relative; */
+    width: 125%;
+    height: 4%;
+    /* padding: 8px; */
+    color: #018390;
+    position: absolute;
+    left: -10px;
+    font-size: 195%;
+    padding: 46px;
+    margin-bottom: 57px;
+    padding-top: 22px;
+}       }
+       #suggestions{
+        position: absolute;
+    top: 55%;
+    left: 30%;
+    height: 30%;
+    width:25%;
+}
+       }
+   }
+</style>
 <script src='../static/jquery.js'></script>
 <script type="text/javascript">
     
@@ -131,17 +200,24 @@
                 console.log(this.responseText);
                 string=this.responseText.slice(4,this.responseText.length);
                 suggestions=string.split(',');
-                for(i=0;i<suggestions.length;i++)
+                document.getElementById('msg').innerHTML=document.getElementById('msg').innerHTML+"<br> Did you mean"
+                for(i=1;i<3;i++)
                 {
+                    suggestbox=document.getElementById('suggestions');
                     document.getElementById('modelbox').style.display="block";
                     label=document.createElement('label');
                     label.innerHTML=suggestions[i];
+                    label.setAttribute('class','member');
                     label.onclick=function()
                     {
                         document.getElementById('search').value=label.innerHTML;
                     searchstring();
                     }
+
+                    label.style.top=(i-1)*25+"%";
                     suggestbox.appendChild(label);
+                    suggestbox.innerHTML=suggestbox.innerHTML+"<br>";
+
                 }
             }
             else if(this.responseText.slice(0,3)!="nil"){
