@@ -90,7 +90,7 @@
  }
 	</style>
 	<nav class="navbar navbar-expand-md navbar-light" >
-		<a class="navbar-brand" href="#">Navbar</a>
+		<img src="../static/prologo.png" style="height: 36px;width: 36px;">
 		<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
 			<span class="navbar-toggler-icon"></span>
 		</button>
@@ -99,7 +99,7 @@
 			<ul class="nav navbar-nav">
 				<li class="nav-item"><a class="nav-link" href="explore.html">Explore!</a></li>
 				<li class="nav-item"><a class="nav-link" href="about.html">About</a></li>
-				<li class="nav-item"><a class="nav-link" id="recent" href="recent.html">Recents</a></li>
+				<li class="nav-item"><a class="nav-link" id="recent" href="recent.htm">Recents</a></li>
 			</ul>
 			<ul class="nav navbar-nav ml-auto">
 				<li class="nav-item" id="login"><a class="nav-link" href="new12.htm">Login/signup</a></li>
@@ -116,7 +116,7 @@
 				<form  style="border: none">
 					<div class=" row no-gutters align-items-center">
             <div class="input-group">
-							<input onchange="suggest1()" style="border-right: 0px;" autocomplete="off" id="search" class="form-control form-control-lg form-control-borderless" type="search" placeholder="Search topics or keywords">
+							<input style="border-right: 0px;" autocomplete="off" id="search" class="form-control form-control-lg form-control-borderless" type="search" placeholder="Search topics or keywords">
 							<div class="image-upload">
 							<input style="display: none" id="file-input" type="file" name="img" oninput="showpic(this)" accept="image/*" / >
 						</div>
@@ -144,7 +144,7 @@
       </div>
       <label class="container-fluid text-center" style="color: red;margin-top: 20px;font-size: 20px"> Oops! Not found</label>
       <label class="container-fluid text-center" id="dym" style="display:none;color: red;font-size: 20px"> Did you mean...</label>
-      <div class="container-fluid text-center" id="Suggestions">
+      <div class="container-fluid text-center" style="overflow-y: hidden;" id="Suggestions">
       </div>
       
         </div>
@@ -163,7 +163,7 @@
       
         <!-- Modal Header -->
         <div class="modal-header">
-          <h4 class="modal-title">Modal Heading</h4>
+          <h4 class="modal-title">Preview</h4>
           <button type="button" class="close" data-dismiss="modal">&times;</button>
         </div>
         
@@ -177,7 +177,7 @@
         <!-- Modal footer -->
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary mr-auto" data-dismiss="modal">Try Again</button>
-          <button type="button" class="btn btn-secondary ml-auto" data-dismiss="modal">Continue</button>
+          <button type="button" class="btn btn-secondary ml-auto" onclick="send()">Continue</button>
         </div>
         
       </div>
@@ -238,12 +238,13 @@
     } 
     function searchstring(){
         search = document.getElementById('search').value;
+        console.log(search)
         if(search==""){
             alert("please enter keyword to search");
             return;
         }
         var xhttp = new XMLHttpRequest();
-        
+
         xhttp.onreadystatechange = function() {
           if (this.readyState == 4 && this.status == 200) {
             if(this.responseText.slice(0,4)=="none"){

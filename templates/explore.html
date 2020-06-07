@@ -40,8 +40,8 @@
   <section>
     <div class="container">
       <header>
-        <h1>Activity Log</h1>
-        <p>Plants are mainly multicellular, predominantly photosynthetic eukaryotes of the kingdom Plantae. Historically, plants were treated as one of two kingdoms including all living things that were not animals, and all algae and fungi were treated as plants.</p>
+        <h2>EXPLORE OUR DATABASE...!</h2>
+        
       </header>
       <div>
         <p id="p">No Activity</p>
@@ -71,6 +71,8 @@ if(localStorage.getItem('name')==null){
             $("#logout").hide();
          $('#login').show();
         }
+        table=[];
+        tabindex=0;
 function getdata(min,max,range) 
 {
   var xhttp = new XMLHttpRequest();
@@ -82,11 +84,14 @@ function getdata(min,max,range)
       for(var i=0;i<recents.length;i++)
       {
         recent=recents[i].split('|');
+        
+        table.push(recents[i]);
         flower=recent[0];
         var baseString = recent[4].trim();
-        text="<div class='abc' style='display:block'><img src='data:image/png;base64,"+baseString+"' alt=''><div class='def'><h3>"+flower+" <span>flower</span></h3><p>By <a href='#'>Ashwin</a> | <a href='#'>Feb 08, 2020</a></p><a href='#' class='btn' id='link' onclick=show("+i+")>Read More</a></div></div>";
+        text="<div class='abc' style='display:block'><img src='data:image/png;base64,"+baseString+"' alt=''><div class='def'><h3>"+flower+" <span>flower</span></h3><p>By <a href='#'>Ashwin</a> | <a href='#'>Feb 08, 2020</a></p><a href='#' class='btn' id='link' onclick=show("+tabindex+")>Read More</a></div></div>";
         document.getElementById('main').innerHTML=document.getElementById('main').innerHTML+text;
         document.getElementById('p').style.display="none";
+        tabindex++;
       }
       if(recents.length==0)
         return
@@ -102,12 +107,11 @@ function getdata(min,max,range)
   xhttp.open("GET", ip+'/showall?min='+min+'&max='+max, true);
   xhttp.send();
 }
-range=1;
-i=0;
-getdata(i,i+range,range);
+range=2;
+getdata(0,range,range);
 function show(index)
 {
-  localStorage.setItem('data',recents[index])
+  localStorage.setItem('data',table[index])
   window.location.href="rosenew.html"
 }
   </script>
